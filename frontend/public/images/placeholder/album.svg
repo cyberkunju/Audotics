@@ -1,0 +1,14 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff0080" />
+      <stop offset="50%" stop-color="#7928ca" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="300" fill="#1f1f1f" />
+  <circle cx="150" cy="150" r="100" fill="#333" />
+  <circle cx="150" cy="150" r="30" fill="#1f1f1f" />
+  <circle cx="150" cy="150" r="15" fill="url(#gradient)" />
+  <text x="150" y="250" font-family="Arial" font-size="16" fill="white" text-anchor="middle">Album Cover</text>
+</svg> 

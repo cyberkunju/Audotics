@@ -1,0 +1,10 @@
+{
+  "input_size": 8192,
+  "hidden_size": 4096,
+  "output_size": 10,
+  "batch_size": 512,
+  "epochs": 150,
+  "learning_rate": 0.0005,
+  "use_mixed_precision": true,
+  "optimize_memory": true
+} 

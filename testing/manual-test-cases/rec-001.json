@@ -1,0 +1,68 @@
+{
+  "id": "REC-001",
+  "name": "ML Recommendation System Test",
+  "description": "Verify that the recommendation system provides accurate and relevant suggestions",
+  "prerequisites": "User account with listening history, and test access to the recommendation system API",
+  "steps": [
+    {
+      "action": "Log in to the Audotics application with a test account that has listening history",
+      "expected": "Login succeeds and user is redirected to the dashboard",
+      "notes": "Use test account test-user-5@audotics.com with password Test1234!"
+    },
+    {
+      "action": "Navigate to the 'For You' or recommendations section",
+      "expected": "Recommendations page loads with personalized content",
+      "notes": "This may take a few seconds as recommendations are generated"
+    },
+    {
+      "action": "Verify that recommendations include a mix of familiar and new content",
+      "expected": "Recommendation list includes some artists/songs from user history and some new discoveries",
+      "notes": "According to requirements, at least 30% should be new content"
+    },
+    {
+      "action": "Check for explanation labels on recommendations",
+      "expected": "Each recommendation has a short explanation of why it was recommended",
+      "notes": "Look for text like 'Because you listened to X' or 'Similar to Y'"
+    },
+    {
+      "action": "Create a new group session and invite another test user",
+      "expected": "Group session is created and invitation is sent",
+      "notes": "Can use test-user-6@audotics.com as the other test user"
+    },
+    {
+      "action": "Navigate to the group recommendations section in the session",
+      "expected": "Group recommendations page loads, showing 'Generating recommendations...' initially",
+      "notes": "This may take up to 10 seconds as the ML processes both users' preferences"
+    },
+    {
+      "action": "Verify that group recommendations blend preferences from both users",
+      "expected": "Recommendations include items that appear in both users' histories or similar items",
+      "notes": "Check the ML logs for confidence scores if available"
+    },
+    {
+      "action": "Interact with a recommendation (like, add to playlist, or skip)",
+      "expected": "Action is recorded and subsequent recommendations adjust based on the interaction",
+      "notes": "You may need to refresh or wait for the next recommendation batch"
+    },
+    {
+      "action": "Check the diversity of recommendations",
+      "expected": "Recommendations span multiple genres, eras, or styles rather than being too similar",
+      "notes": "Look for at least 3 different genres in the top 10 recommendations"
+    },
+    {
+      "action": "Time how long it takes to generate a new set of recommendations",
+      "expected": "New recommendations should load in under 3 seconds for individual users, under 5 seconds for groups",
+      "notes": "Record the actual time to verify performance requirements"
+    },
+    {
+      "action": "Check API response times in the browser developer tools",
+      "expected": "API calls to the recommendation endpoints should complete in under 1000ms",
+      "notes": "Use the Network tab in browser developer tools"
+    },
+    {
+      "action": "Verify that recommendations maintain quality with a cold start (new user)",
+      "expected": "Even with limited history, recommendations should appear reasonable",
+      "notes": "Log out and create a new test account to verify this"
+    }
+  ]
+} 

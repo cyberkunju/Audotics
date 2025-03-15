@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audotics Testing Checklist</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            color: #1DB954; /* Spotify green color */
+            text-align: center;
+            border-bottom: 2px solid #1DB954;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #191414; /* Spotify black */
+            background-color: #eee;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 25px;
+        }
+        
+        h3 {
+            color: #1DB954;
+            margin-top: 20px;
+            border-left: 3px solid #1DB954;
+            padding-left: 10px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            background-color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 5px;
+            min-width: 18px;
+            height: 18px;
+        }
+        
+        .critical {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .high {
+            border-left: 4px solid #f39c12;
+        }
+        
+        .normal {
+            border-left: 4px solid #3498db;
+        }
+        
+        .section-divider {
+            height: 20px;
+        }
+        
+        .sign-off {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .sign-field {
+            margin: 10px 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .content {
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .checklist-item {
+                padding: 6px 8px;
+            }
+        }
+        
+        button.save {
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+        }
+        
+        button.save:hover {
+            background-color: #1aa34a;
+        }
+        
+        .critical-label {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Audotics Testing Checklist</h1>
+    
+    <h2 class="collapsible">Critical Path Tests (MUST PASS)</h2>
+    <div class="content">
+        <h3>User Authentication</h3>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="auth1">
+            <label for="auth1">User can register with email</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="auth2">
+            <label for="auth2">User can login with email and password</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="auth3">
+            <label for="auth3">SSO with Spotify works correctly</label>
+        </div>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="auth4">
+            <label for="auth4">Password reset functionality works</label>
+        </div>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="auth5">
+            <label for="auth5">Account settings can be updated</label>
+        </div>
+        
+        <h3>Group Sessions</h3>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="group1">
+            <label for="group1">User can create a new group session</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="group2">
+            <label for="group2">User can join an existing group session</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="group3">
+            <label for="group3">Real-time updates work across multiple clients</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="group4">
+            <label for="group4">Host can manage session permissions</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="group5">
+            <label for="group5">Users get appropriate notifications when events occur</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="group6">
+            <label for="group6">Group playlists are properly synchronized</label>
+        </div>
+        
+        <h3>Search & Discovery</h3>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="search1">
+            <label for="search1">Basic search works with various query types</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="search2">
+            <label for="search2">Advanced search filters function properly</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="search3">
+            <label for="search3">Search results are relevant to query</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="search4">
+            <label for="search4">Search performance meets requirements (< 300ms)</label>
+        </div>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="search5">
+            <label for="search5">Pagination works correctly</label>
+        </div>
+        
+        <h3>Recommendation Engine</h3>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="rec1">
+            <label for="rec1">Personal recommendations are generated</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="rec2">
+            <label for="rec2">Group recommendations reflect members' preferences</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="rec3">
+            <label for="rec3">Content diversity meets requirements</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="rec4">
+            <label for="rec4">Recommendations update with user feedback</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="rec5">
+            <label for="rec5">ML response time meets requirements (< 500ms)</label>
+        </div>
+        
+        <h3>Core API Performance</h3>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="api1">
+            <label for="api1">All critical APIs respond within SLA (< 300ms)</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="api2">
+            <label for="api2">System handles concurrent users (100+ simultaneous)</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="api3">
+            <label for="api3">No memory leaks observed during extended operation</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="api4">
+            <label for="api4">Database queries are optimized</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="api5">
+            <label for="api5">Error handling works as expected</label>
+        </div>
+        
+        <h3>Security Checks</h3>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="sec1">
+            <label for="sec1">Authentication tokens are properly secured</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="sec2">
+            <label for="sec2">Role-based access control works as expected</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="sec3">
+            <label for="sec3">User data is properly encrypted</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="sec4">
+            <label for="sec4">API endpoints validate inputs</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="sec5">
+            <label for="sec5">No sensitive data exposed in responses</label>
+        </div>
+    </div>
+    
+    <div class="section-divider"></div>
+    
+    <h2 class="collapsible">Priority Feature Tests</h2>
+    <div class="content">
+        <h3>User Profile</h3>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="prof1">
+            <label for="prof1">User can upload profile picture</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="prof2">
+            <label for="prof2">Preference settings are saved and applied</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="prof3">
+            <label for="prof3">Music history is recorded accurately</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="prof4">
+            <label for="prof4">Privacy settings work as expected</label>
+        </div>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="prof5">
+            <label for="prof5">Profile data displays correctly</label>
+        </div>
+        
+        <h3>Playlist Management</h3>
+        <div class="checklist-item high">
+            <input type="checkbox" id="play1">
+            <label for="play1">User can create playlists</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="play2">
+            <label for="play2">Tracks can be added/removed from playlists</label>
+        </div>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="play3">
+            <label for="play3">Playlists can be shared with other users</label>
+        </div>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="play4">
+            <label for="play4">Collaborative editing works</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="play5">
+            <label for="play5">Playlist import/export features work</label>
+        </div>
+    </div>
+    
+    <div class="section-divider"></div>
+    
+    <h2 class="collapsible">Browser Compatibility</h2>
+    <div class="content">
+        <h3>Desktop Browsers</h3>
+        <div class="checklist-item high">
+            <input type="checkbox" id="browser1">
+            <label for="browser1">Chrome (latest)</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="browser2">
+            <label for="browser2">Firefox (latest)</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="browser3">
+            <label for="browser3">Safari (latest)</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="browser4">
+            <label for="browser4">Edge (latest)</label>
+        </div>
+        
+        <h3>Mobile Browsers</h3>
+        <div class="checklist-item high">
+            <input type="checkbox" id="mbrowser1">
+            <label for="mbrowser1">iOS Safari</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="mbrowser2">
+            <label for="mbrowser2">Android Chrome</label>
+        </div>
+        <div class="checklist-item normal">
+            <input type="checkbox" id="mbrowser3">
+            <label for="mbrowser3">Android Firefox</label>
+        </div>
+    </div>
+    
+    <div class="section-divider"></div>
+    
+    <h2 class="collapsible">Test Completion Checklist</h2>
+    <div class="content">
+        <div class="checklist-item critical">
+            <input type="checkbox" id="complete1">
+            <label for="complete1">All critical tests have been executed</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="complete2">
+            <label for="complete2">All critical issues have been addressed</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="complete3">
+            <label for="complete3">Test results have been documented</label>
+        </div>
+        <div class="checklist-item critical">
+            <input type="checkbox" id="complete4">
+            <label for="complete4">Performance metrics meet or exceed targets</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="complete5">
+            <label for="complete5">Regression tests show no regressions</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="complete6">
+            <label for="complete6">All browser compatibility tests passed</label>
+        </div>
+        <div class="checklist-item high">
+            <input type="checkbox" id="complete7">
+            <label for="complete7">Final testing report has been completed</label>
+        </div>
+    </div>
+    
+    <div class="section-divider"></div>
+    
+    <div class="sign-off">
+        <h2>Final Sign-off</h2>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="sign1">
+            <label for="sign1">Frontend Team Lead approval</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="sign2">
+            <label for="sign2">Backend Team Lead approval</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="sign3">
+            <label for="sign3">ML Team Lead approval</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="sign4">
+            <label for="sign4">QA Team Lead approval</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="sign5">
+            <label for="sign5">Project Manager approval</label>
+        </div>
+        <div class="checklist-item">
+            <input type="checkbox" id="sign6">
+            <label for="sign6">Product Owner approval</label>
+        </div>
+        
+        <div class="sign-field">
+            <strong>Date:</strong> <span id="current-date"></span>
+        </div>
+        <div class="sign-field">
+            <strong>Time:</strong> <span id="current-time"></span>
+        </div>
+        <div class="sign-field">
+            <strong>Signed by:</strong> <input type="text" style="border: none; border-bottom: 1px solid #ccc; width: 70%;">
+        </div>
+    </div>
+    
+    <button class="save" onclick="saveProgress()">Save Progress</button>
+    
+    <script>
+        // Set current date and time
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            document.getElementById('current-date').textContent = now.toLocaleDateString();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+            
+            // Load saved state
+            loadSavedState();
+            
+            // Add collapsible functionality
+            const collapsibles = document.querySelectorAll('.collapsible');
+            collapsibles.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content.style.display === 'none') {
+                        content.style.display = 'block';
+                    } else {
+                        content.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Save checkboxes state to localStorage
+        function saveProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checkboxState = {};
+            
+            checkboxes.forEach(checkbox => {
+                checkboxState[checkbox.id] = checkbox.checked;
+            });
+            
+            localStorage.setItem('audoticsTestChecklistState', JSON.stringify(checkboxState));
+            alert('Progress saved successfully!');
+        }
+        
+        // Load saved state from localStorage
+        function loadSavedState() {
+            const savedState = localStorage.getItem('audoticsTestChecklistState');
+            if (savedState) {
+                const checkboxState = JSON.parse(savedState);
+                
+                Object.keys(checkboxState).forEach(id => {
+                    const checkbox = document.getElementById(id);
+                    if (checkbox) {
+                        checkbox.checked = checkboxState[id];
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

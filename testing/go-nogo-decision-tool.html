@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audotics Launch Go/No-Go Decision Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1, h2, h3 {
+            color: #1DB954; /* Spotify green color */
+        }
+        
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #1DB954;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .category-header {
+            background-color: #1DB954;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .criteria-row:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .status-pass {
+            background-color: #d4edda;
+            color: #155724;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .status-fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .status-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .go-result {
+            background-color: #d4edda;
+            border: 2px solid #28a745;
+        }
+        
+        .nogo-result {
+            background-color: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+        
+        .conditional-result {
+            background-color: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        button {
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #19a34a;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+        }
+        
+        .signature-section {
+            margin-top: 40px;
+        }
+        
+        .signature-block {
+            margin-bottom: 30px;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid #333;
+            width: 300px;
+            margin: 30px 0 5px 0;
+        }
+        
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .notes-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+        }
+        
+        @media print {
+            button, .no-print {
+                display: none;
+            }
+            
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                break-inside: avoid;
+            }
+            
+            .result-section {
+                break-before: page;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Audotics Launch Go/No-Go Decision Tool</h1>
+    <div class="section">
+        <h2>Meeting Information</h2>
+        <table>
+            <tr>
+                <td><strong>Date:</strong></td>
+                <td><span id="current-date"></span></td>
+                <td><strong>Time:</strong></td>
+                <td><span id="current-time"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Facilitator:</strong></td>
+                <td><input type="text" id="facilitator-name" placeholder="Enter name"></td>
+                <td><strong>Location:</strong></td>
+                <td><input type="text" id="meeting-location" placeholder="Enter location or virtual link"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Critical Launch Criteria</h2>
+        <p>Each criterion must be evaluated by the responsible team. Select Pass/Fail/Warning for each item.</p>
+        
+        <table id="criteria-table">
+            <tr>
+                <th width="5%">#</th>
+                <th width="30%">Criterion</th>
+                <th width="25%">Threshold</th>
+                <th width="20%">Responsible Team</th>
+                <th width="20%">Status</th>
+            </tr>
+            <!-- Core Functionality -->
+            <tr class="category-header">
+                <td colspan="5">Core Functionality</td>
+            </tr>
+            <tr class="criteria-row">
+                <td>1</td>
+                <td>Authentication & User Management</td>
+                <td>All critical auth flows functional with no security issues</td>
+                <td>Security Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>2</td>
+                <td>Group Session Functionality</td>
+                <td>Create, join, interact without critical issues</td>
+                <td>Backend Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>3</td>
+                <td>Recommendation System</td>
+                <td>Accurate recommendations with acceptable response time</td>
+                <td>ML Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>4</td>
+                <td>Search Functionality</td>
+                <td>Search returns relevant results within SLA</td>
+                <td>Backend Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>5</td>
+                <td>Playlist Management</td>
+                <td>Create, edit, share playlists without issues</td>
+                <td>Backend Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <!-- Performance -->
+            <tr class="category-header">
+                <td colspan="5">Performance</td>
+            </tr>
+            <tr class="criteria-row">
+                <td>6</td>
+                <td>API Response Time</td>
+                <td>< 300ms (95th percentile)</td>
+                <td>Performance Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>7</td>
+                <td>Page Load Time</td>
+                <td>< 2 seconds</td>
+                <td>Frontend Team</td>
+                <td>
+                    <select class="status-select" data-critical="false">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>8</td>
+                <td>Concurrent User Support</td>
+                <td>100+ simultaneous users</td>
+                <td>Infrastructure Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>9</td>
+                <td>Database Performance</td>
+                <td>Queries < 200ms, no bottlenecks</td>
+                <td>Database Team</td>
+                <td>
+                    <select class="status-select" data-critical="false">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <!-- Security -->
+            <tr class="category-header">
+                <td colspan="5">Security</td>
+            </tr>
+            <tr class="criteria-row">
+                <td>10</td>
+                <td>Authentication Security</td>
+                <td>No critical security vulnerabilities</td>
+                <td>Security Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>11</td>
+                <td>Data Protection</td>
+                <td>Encryption in transit and at rest</td>
+                <td>Security Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>12</td>
+                <td>API Security</td>
+                <td>All endpoints properly secured</td>
+                <td>Security Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <!-- Cross-Platform Compatibility -->
+            <tr class="category-header">
+                <td colspan="5">Cross-Platform Compatibility</td>
+            </tr>
+            <tr class="criteria-row">
+                <td>13</td>
+                <td>Desktop Browser Compatibility</td>
+                <td>Chrome, Firefox, Safari, Edge latest versions</td>
+                <td>QA Team</td>
+                <td>
+                    <select class="status-select" data-critical="false">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>14</td>
+                <td>Mobile Browser Compatibility</td>
+                <td>iOS Safari, Android Chrome</td>
+                <td>QA Team</td>
+                <td>
+                    <select class="status-select" data-critical="false">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <!-- Infrastructure -->
+            <tr class="category-header">
+                <td colspan="5">Infrastructure</td>
+            </tr>
+            <tr class="criteria-row">
+                <td>15</td>
+                <td>Deployment Pipeline</td>
+                <td>Verified and tested</td>
+                <td>DevOps Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>16</td>
+                <td>Monitoring & Alerting</td>
+                <td>All systems monitored, alerts configured</td>
+                <td>DevOps Team</td>
+                <td>
+                    <select class="status-select" data-critical="false">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr class="criteria-row">
+                <td>17</td>
+                <td>Rollback Procedures</td>
+                <td>Documented and tested</td>
+                <td>DevOps Team</td>
+                <td>
+                    <select class="status-select" data-critical="true">
+                        <option value=""></option>
+                        <option value="pass">PASS</option>
+                        <option value="warning">WARNING</option>
+                        <option value="fail">FAIL</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        
+        <button id="evaluate-button">Evaluate Go/No-Go Status</button>
+    </div>
+    
+    <div id="result-go" class="result-section go-result hidden">
+        <h2>GO for Launch! ✅</h2>
+        <p>All critical criteria have passed. The application is ready for deployment.</p>
+        <p><strong>Launch Approved:</strong> Proceed with deployment as scheduled.</p>
+        <div class="chart-container" id="status-chart-go"></div>
+    </div>
+    
+    <div id="result-conditional" class="result-section conditional-result hidden">
+        <h2>Conditional GO for Launch ⚠️</h2>
+        <p>All critical criteria have passed, but some non-critical criteria have warnings or failures.</p>
+        <p><strong>Launch Conditionally Approved:</strong> Proceed with deployment, but address the identified issues according to priority.</p>
+        <div class="chart-container" id="status-chart-conditional"></div>
+    </div>
+    
+    <div id="result-nogo" class="result-section nogo-result hidden">
+        <h2>NO-GO for Launch! ❌</h2>
+        <p>One or more critical criteria have failed. The application is not ready for deployment.</p>
+        <p><strong>Launch Not Approved:</strong> Address the critical issues before attempting deployment.</p>
+        <div class="chart-container" id="status-chart-nogo"></div>
+    </div>
+    
+    <div id="issues-section" class="section hidden">
+        <h2>Issues to Address</h2>
+        <table id="issues-table">
+            <tr>
+                <th>Criterion</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+            <!-- Issues will be populated here -->
+        </table>
+        
+        <h3>Additional Notes</h3>
+        <textarea class="notes-field" id="additional-notes" placeholder="Enter any additional notes or action items..."></textarea>
+    </div>
+    
+    <div id="signature-section" class="section signature-section hidden">
+        <h2>Approval Signatures</h2>
+        
+        <div class="flex-container">
+            <div class="signature-block">
+                <p>Project Manager</p>
+                <div class="signature-line"></div>
+                <p>Name: ________________________</p>
+                <p>Date: ________________________</p>
+            </div>
+            
+            <div class="signature-block">
+                <p>Technical Lead</p>
+                <div class="signature-line"></div>
+                <p>Name: ________________________</p>
+                <p>Date: ________________________</p>
+            </div>
+            
+            <div class="signature-block">
+                <p>QA Lead</p>
+                <div class="signature-line"></div>
+                <p>Name: ________________________</p>
+                <p>Date: ________________________</p>
+            </div>
+            
+            <div class="signature-block">
+                <p>Product Owner</p>
+                <div class="signature-line"></div>
+                <p>Name: ________________________</p>
+                <p>Date: ________________________</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section no-print">
+        <button id="print-button">Print Decision Document</button>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date and time
+            const now = new Date();
+            document.getElementById('current-date').textContent = now.toLocaleDateString();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+            
+            // Add event listeners
+            document.getElementById('evaluate-button').addEventListener('click', evaluateStatus);
+            document.getElementById('print-button').addEventListener('click', function() {
+                window.print();
+            });
+            
+            // Status change highlighting
+            const statusSelects = document.querySelectorAll('.status-select');
+            statusSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const td = this.parentElement;
+                    td.className = '';
+                    if (this.value === 'pass') {
+                        td.classList.add('status-pass');
+                    } else if (this.value === 'warning') {
+                        td.classList.add('status-warning');
+                    } else if (this.value === 'fail') {
+                        td.classList.add('status-fail');
+                    }
+                });
+            });
+        });
+        
+        function evaluateStatus() {
+            const statusSelects = document.querySelectorAll('.status-select');
+            
+            let criticalFailures = 0;
+            let criticalWarnings = 0;
+            let nonCriticalFailures = 0;
+            let nonCriticalWarnings = 0;
+            let passes = 0;
+            let notEvaluated = 0;
+            
+            statusSelects.forEach(select => {
+                const isCritical = select.getAttribute('data-critical') === 'true';
+                
+                if (select.value === '') {
+                    notEvaluated++;
+                } else if (select.value === 'pass') {
+                    passes++;
+                } else if (select.value === 'warning') {
+                    if (isCritical) {
+                        criticalWarnings++;
+                    } else {
+                        nonCriticalWarnings++;
+                    }
+                } else if (select.value === 'fail') {
+                    if (isCritical) {
+                        criticalFailures++;
+                    } else {
+                        nonCriticalFailures++;
+                    }
+                }
+            });
+            
+            // Hide all result sections
+            document.getElementById('result-go').classList.add('hidden');
+            document.getElementById('result-conditional').classList.add('hidden');
+            document.getElementById('result-nogo').classList.add('hidden');
+            
+            // Determine status
+            if (notEvaluated > 0) {
+                alert('Please evaluate all criteria before determining Go/No-Go status.');
+                return;
+            }
+            
+            if (criticalFailures > 0) {
+                document.getElementById('result-nogo').classList.remove('hidden');
+                // renderChart('status-chart-nogo', passes, criticalWarnings, criticalFailures, nonCriticalWarnings, nonCriticalFailures);
+            } else if (criticalWarnings > 0 || nonCriticalFailures > 0) {
+                document.getElementById('result-conditional').classList.remove('hidden');
+                // renderChart('status-chart-conditional', passes, criticalWarnings, criticalFailures, nonCriticalWarnings, nonCriticalFailures);
+            } else {
+                document.getElementById('result-go').classList.remove('hidden');
+                // renderChart('status-chart-go', passes, criticalWarnings, criticalFailures, nonCriticalWarnings, nonCriticalFailures);
+            }
+            
+            // Show issues section
+            document.getElementById('issues-section').classList.remove('hidden');
+            document.getElementById('signature-section').classList.remove('hidden');
+            
+            // Populate issues table
+            populateIssuesTable();
+        }
+        
+        function populateIssuesTable() {
+            const issuesTable = document.getElementById('issues-table');
+            // Clear previous rows except header
+            while (issuesTable.rows.length > 1) {
+                issuesTable.deleteRow(1);
+            }
+            
+            const criteriaTable = document.getElementById('criteria-table');
+            
+            for (let i = 1; i < criteriaTable.rows.length; i++) {
+                const row = criteriaTable.rows[i];
+                
+                // Skip category headers
+                if (row.classList.contains('category-header')) {
+                    continue;
+                }
+                
+                const criterionName = row.cells[1].textContent;
+                const statusSelect = row.cells[4].querySelector('select');
+                
+                if (statusSelect.value === 'warning' || statusSelect.value === 'fail') {
+                    const newRow = issuesTable.insertRow();
+                    
+                    const criterionCell = newRow.insertCell(0);
+                    criterionCell.textContent = criterionName;
+                    
+                    const statusCell = newRow.insertCell(1);
+                    statusCell.textContent = statusSelect.value.toUpperCase();
+                    if (statusSelect.value === 'warning') {
+                        statusCell.classList.add('status-warning');
+                    } else {
+                        statusCell.classList.add('status-fail');
+                    }
+                    
+                    const notesCell = newRow.insertCell(2);
+                    notesCell.innerHTML = '<input type="text" placeholder="Enter issue details...">';
+                }
+            }
+            
+            // If no issues found
+            if (issuesTable.rows.length === 1) {
+                const newRow = issuesTable.insertRow();
+                const cell = newRow.insertCell(0);
+                cell.colSpan = 3;
+                cell.textContent = 'No issues found.';
+                cell.style.textAlign = 'center';
+            }
+        }
+        
+        // function renderChart(elementId, passes, criticalWarnings, criticalFailures, nonCriticalWarnings, nonCriticalFailures) {
+        //     // This would normally use Chart.js or similar library
+        //     // For simplicity, we're just adding a placeholder
+        //     const element = document.getElementById(elementId);
+        //     element.innerHTML = `
+        //         <p>Chart placeholder: ${passes} passes, ${criticalWarnings} critical warnings, 
+        //         ${criticalFailures} critical failures, ${nonCriticalWarnings} non-critical warnings, 
+        //         ${nonCriticalFailures} non-critical failures</p>
+        //     `;
+        // }
+    </script>
+</body>
+</html> 

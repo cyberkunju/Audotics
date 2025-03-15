@@ -1,0 +1,30 @@
+{
+  "name": "audotics",
+  "version": "1.0.0",
+  "description": "AI-Powered Music Recommendation System",
+  "scripts": {
+    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend:only": "cd frontend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "build": "concurrently \"cd frontend && npm run build\" \"cd backend && npm run build\"",
+    "start": "cd backend && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/socket.io-client": "^1.4.36",
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "@nestjs/platform-socket.io": "^11.0.11",
+    "@nestjs/platform-ws": "^11.0.11",
+    "@smithery/sdk": "^1.0.2",
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "@types/redis": "^4.0.10",
+    "@wandb/sdk": "^0.5.1",
+    "postcss-nesting": "^13.0.1",
+    "redis": "^4.7.0"
+  }
+}

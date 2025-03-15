@@ -1,0 +1,14 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff0080" />
+      <stop offset="50%" stop-color="#7928ca" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="300" fill="#1f1f1f" />
+  <circle cx="150" cy="120" r="60" fill="#333" />
+  <circle cx="150" cy="100" r="25" fill="url(#gradient)" />
+  <path d="M95,180 C95,140 205,140 205,180 L205,220 C205,220 185,230 150,230 C115,230 95,220 95,220 Z" fill="#333" />
+  <text x="150" y="270" font-family="Arial" font-size="16" fill="white" text-anchor="middle">Artist</text>
+</svg> 

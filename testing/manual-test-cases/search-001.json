@@ -1,0 +1,83 @@
+{
+  "id": "SEARCH-001",
+  "name": "Search Functionality Test",
+  "description": "Verify that the search feature returns relevant results in a timely manner",
+  "prerequisites": "User account with access to search feature, test data in the system",
+  "steps": [
+    {
+      "action": "Log in to the Audotics application with a test account",
+      "expected": "Login succeeds and user is redirected to the dashboard",
+      "notes": "Use test account test-user-3@audotics.com with password Test1234!"
+    },
+    {
+      "action": "Locate and click on the search bar/icon in the application header",
+      "expected": "Search input is focused and ready for text entry",
+      "notes": "Typically found in the top navigation bar"
+    },
+    {
+      "action": "Enter a simple, common search term (e.g., 'rock')",
+      "expected": "Search results appear, categorized by type (artists, songs, playlists, etc.)",
+      "notes": "Results should appear as you type (after 3+ characters)"
+    },
+    {
+      "action": "Verify that search results load within acceptable time",
+      "expected": "Initial results should appear within 1 second of typing pause",
+      "notes": "Use a stopwatch or the browser dev tools to measure time"
+    },
+    {
+      "action": "Check that results are categorized appropriately",
+      "expected": "Results are organized into clear categories (Artists, Songs, Albums, Playlists, Users)",
+      "notes": "Each category should have a clearly labeled heading"
+    },
+    {
+      "action": "Test partial word search (e.g., 'beat' instead of 'beatles')",
+      "expected": "System returns relevant results that contain the partial term",
+      "notes": "Should match beginning, middle, or end of words"
+    },
+    {
+      "action": "Test misspelled search term (e.g., 'beattles' instead of 'beatles')",
+      "expected": "System suggests correction or returns results for the correct spelling",
+      "notes": "Look for 'Did you mean...' or similar suggestion"
+    },
+    {
+      "action": "Test search with special characters (e.g., 'AC/DC' or 'P!nk')",
+      "expected": "System correctly handles special characters and returns relevant results",
+      "notes": "No errors should appear in the console"
+    },
+    {
+      "action": "Click on 'Show all results' or equivalent to view full search results page",
+      "expected": "Full search results page loads with more comprehensive results and filtering options",
+      "notes": "Check page load time - should be under 2 seconds"
+    },
+    {
+      "action": "Test filter functionality by selecting a specific category (e.g., 'Artists' only)",
+      "expected": "Results are filtered to show only the selected category",
+      "notes": "The filter should apply immediately without page reload"
+    },
+    {
+      "action": "Test sort functionality if available (e.g., sort by relevance, popularity, date)",
+      "expected": "Results are reordered according to the selected sort option",
+      "notes": "The sort should apply immediately without page reload"
+    },
+    {
+      "action": "Perform an advanced search using operators (e.g., 'rock NOT classic')",
+      "expected": "System interprets operators correctly and returns refined results",
+      "notes": "Check documentation for supported operators"
+    },
+    {
+      "action": "Test search for non-Latin characters (e.g., 'пятница' or '안녕하세요')",
+      "expected": "System handles non-Latin characters and returns appropriate results if available",
+      "notes": "May require region-specific test data"
+    },
+    {
+      "action": "Clear the search and enter a term with no expected results",
+      "expected": "System shows an appropriate 'No results found' message with suggestions",
+      "notes": "The message should be user-friendly and helpful"
+    },
+    {
+      "action": "Check browser history after performing multiple searches",
+      "expected": "Each distinct search should create a unique URL that can be bookmarked or shared",
+      "notes": "Use browser back button to verify history navigation works"
+    }
+  ]
+} 

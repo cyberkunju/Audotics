@@ -1,0 +1,18 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff0080" />
+      <stop offset="50%" stop-color="#7928ca" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="300" fill="#1f1f1f" />
+  <rect x="70" y="80" width="160" height="140" rx="5" fill="#333" />
+  <!-- Playlist lines -->
+  <rect x="90" y="100" width="120" height="10" rx="2" fill="url(#gradient)" opacity="0.8" />
+  <rect x="90" y="120" width="120" height="10" rx="2" fill="url(#gradient)" opacity="0.6" />
+  <rect x="90" y="140" width="120" height="10" rx="2" fill="url(#gradient)" opacity="0.4" />
+  <rect x="90" y="160" width="120" height="10" rx="2" fill="url(#gradient)" opacity="0.7" />
+  <rect x="90" y="180" width="120" height="10" rx="2" fill="url(#gradient)" opacity="0.5" />
+  <text x="150" y="250" font-family="Arial" font-size="16" fill="white" text-anchor="middle">Playlist</text>
+</svg> 

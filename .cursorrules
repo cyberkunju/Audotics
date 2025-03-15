@@ -1,0 +1,27 @@
+# .cursorrules
+#Windows PowerShell, which doesn't support the && operator in the same way as bash
+# if you have any doubt about the code or the version or anything. just search the internet for the answer. you can tell me to use @web i will do it so you can search the internet for the answer.
+# Review entire codebase for every response and change.
+# Double-check all changes before applying to ensure perfection and avoid errors.
+#i have only aprox a month to finish this full project and submit. so i need to do everything according to it. also you will be helping me full so it will be faster i hope.. 
+# before implementing any new features just check the whole codebase and make sure that it is not already implemented. and have any unfinished business.
+#The current today's date is 18/02/2025
+# dont suggest me to enhance any implemented features more or add new features. just implement what is already in the todo.md file. and as we planned.
+
+rules:
+  - review_all_code_base: true  # Always review the entire codebase before any change
+  - no_explanation_needed: true  # No need for extensive explanations, just concise and effective fixes
+  - error_free: true  # Ensure there are no errors in the code at any stage
+
+# Reference the project details from the "docs" folder in root for any specific context or details.
+project_reference:
+  docs_folder: "root/docs"
+
+# Update task and status files
+task_management:
+  - update_todo_file: "root/todo.md"  # Update "todo.md" with any tasks and actions
+  - update_status_file: "root/status.md"  # Update "status.md" with current project status
+
+# Keep the focus on getting the project to completion as soon as possible
+priority:
+  - finish_project_urgently: true

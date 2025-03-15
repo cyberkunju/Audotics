@@ -1,0 +1,40 @@
+{
+  "name": "audotics-testing",
+  "version": "1.0.0",
+  "description": "Testing framework for Audotics application",
+  "main": "run-automated-tests.js",
+  "scripts": {
+    "test:all": "node run-automated-tests.js all",
+    "test:auth": "node run-automated-tests.js auth",
+    "test:group": "node run-automated-tests.js group",
+    "test:ml": "node run-automated-tests.js ml",
+    "test:search": "node run-automated-tests.js search",
+    "test:playlist": "node run-automated-tests.js playlist",
+    "test:spotify": "node run-automated-tests.js spotify",
+    "test:verify": "node run-verify-setup.js",
+    "test:headless": "HEADLESS=true node run-automated-tests.js",
+    "test:visible": "HEADLESS=false node run-automated-tests.js",
+    "manual-tests": "node manual-test-helper.js"
+  },
+  "keywords": [
+    "testing",
+    "automation",
+    "quality"
+  ],
+  "author": "Audotics Team",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "puppeteer": "^19.7.2",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "winston": "^3.8.2",
+    "chalk": "^4.1.2",
+    "marked": "^4.2.12",
+    "open": "^8.4.2",
+    "axios": "^1.3.4"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 

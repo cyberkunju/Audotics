@@ -1,0 +1,143 @@
+// This is your Prisma schema file
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  name              String
+  password          String?
+  avatar            String?
+  spotifyId         String?  
+  spotifyAccessToken    String?   @db.Text
+  spotifyRefreshToken   String?   @db.Text
+  spotifyTokenExpiry    DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  preferences       UserPreference?
+  groupSessions     GroupSession[]
+  playlists         Playlist[]
+  interactions      TrackInteraction[]
+  playlistUpdates   PlaylistUpdate[]
+
+  @@index([email])
+  @@index([name])
+  @@index([spotifyId])
+}
+
+model UserPreference {
+  id            String    @id @default(uuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id])
+  topTracks     String[]  // Spotify track IDs
+  topArtists    String[]  // Spotify artist IDs
+  genres        String[]  @default([])
+  features      Json?     // Stores audio features preferences
+  lastUpdated   DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([topArtists])
+  @@index([genres])
+}
+
+model GroupSession {
+  id            String    @id @default(uuid())
+  name          String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  active        Boolean   @default(true)
+  users         User[]
+  playlist      Playlist?
+
+  @@index([active])
+  @@index([createdAt])
+  @@index([updatedAt])
+}
+
+model Playlist {
+  id            String    @id @default(uuid())
+  spotifyId     String?   @unique
+  name          String
+  description   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  creator       User      @relation(fields: [creatorId], references: [id])
+  creatorId     String
+  groupSession  GroupSession? @relation(fields: [sessionId], references: [id])
+  sessionId     String?   @unique
+  tracks        Track[]
+  updates       PlaylistUpdate[]
+
+  @@index([creatorId])
+  @@index([sessionId])
+  @@index([createdAt])
+}
+
+model Track {
+  id            String    @id @default(uuid())
+  spotifyId     String    @unique
+  name          String
+  artists       String[]
+  album         String
+  audioFeatures TrackFeatures?
+  playlists     Playlist[]
+  interactions  TrackInteraction[]
+  popularity    Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([spotifyId])
+  @@index([artists])
+}
+
+model TrackFeatures {
+  id              String    @id @default(uuid())
+  trackId         String    @unique
+  track           Track     @relation(fields: [trackId], references: [id])
+  danceability    Float
+  energy          Float
+  key             Int
+  loudness        Float
+  mode            Int
+  speechiness     Float
+  acousticness    Float
+  instrumentalness Float
+  liveness        Float
+  valence         Float
+  tempo           Float
+  updatedAt       DateTime  @updatedAt
+
+  @@index([trackId])
+}
+
+model TrackInteraction {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  trackId   String
+  track     Track     @relation(fields: [trackId], references: [id])
+  type      String    // play, skip, like, etc.
+  timestamp DateTime  @default(now())
+
+  @@unique([userId, trackId, type, timestamp])
+}
+
+model PlaylistUpdate {
+  id          String    @id @default(uuid())
+  playlistId  String
+  playlist    Playlist  @relation(fields: [playlistId], references: [id])
+  type        String    // add, remove, reorder
+  trackId     String    // comma-separated track IDs for batch operations
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  timestamp   DateTime  @default(now())
+
+  @@index([playlistId, timestamp])
+}
